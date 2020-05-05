@@ -22,6 +22,8 @@ import net.datastream.wsdls.inforws.InforWebServicesPT;
 
 import javax.xml.ws.Holder;
 
+import static ch.cern.eam.wshub.core.tools.DataTypeTools.toCodeString;
+
 public class CaseServiceImpl implements CaseService {
 
 	private Tools tools;
@@ -228,6 +230,13 @@ public class CaseServiceImpl implements CaseService {
 			throw tools.generateFault("The record has been updated by another user.");
 		}
 
+
+//		caseManagement.setUSERDEFINEDAREA(tools.getCustomFieldsTools().getInforCustomFields(
+//				context,
+//				"",
+//				caseManagement.getUSERDEFINEDAREA(),
+//				caseMT.getClassCode(),
+//				"CASE"));
 		//
 		// INIT
 		//
@@ -235,6 +244,10 @@ public class CaseServiceImpl implements CaseService {
 		//
 		// UPDATE
 		//
+		
+		tools.getInforFieldTools().transformWSHubObject(caseManagement, caseMT, context);
+
+
 		MP3641_SyncCaseManagement_001 syncCase = new MP3641_SyncCaseManagement_001();
 		syncCase.setCaseManagement(caseManagement);
 		MP3641_SyncCaseManagement_001_Result syncCaseResult =
